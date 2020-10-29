@@ -1,0 +1,23 @@
+{
+  "name": "cmscart",
+  "version": "1.0.0",
+  "description": "CMS NODE JS SHOPPING-CART",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "keywords": [
+    "nodejs",
+    "mongodb",
+    "bootstrap"
+  ],
+  "author": "Thabo",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.11",
+    "nodemon": "^2.0.6"
+  }
+}
