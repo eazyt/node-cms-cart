@@ -2,7 +2,8 @@ require('dotenv').config()
 const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
-
+const bodyParser = require('body-parser')
+const session = require('express-session')
 // connect to DB
 // mongoose.connect(process.env.MONGO_URL, {
 //   useCreateIndex: true,
@@ -36,6 +37,18 @@ app.set('view engine', 'ejs')
 // Set public folder
 app.use(express.static(path.join(__dirname, 'public')))
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+ 
+// parse application/json
+app.use(bodyParser.json())
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
 // Set routes
 const pages = require('./routes/pages')
 const adminPages = require('./routes/admin_pages')
