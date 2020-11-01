@@ -28,8 +28,7 @@
     <% }); %>
   </tbody>
 </table>
-<script
-  src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
 <script>
 
@@ -38,8 +37,8 @@
     items: "tr:not('.home')",
     placeholder: "ui-state-hightlight",
     update: function () {
-      var ids = $('tbody').sortable("serialize");
-      var url = "/admin/pages/reorder-pages";
+      let ids = $('tbody').sortable("serialize");
+      let url = "/admin/pages/reorder-pages";
 
       $.post(url, ids);
     }
