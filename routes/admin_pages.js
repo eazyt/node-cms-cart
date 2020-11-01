@@ -115,16 +115,32 @@ router.post('/add-page', [
 
 
   router.post('/reorder-pages', (req, res) => {
-    Page.find({})
-      .sort({
-        sorting: 1
-      })
-      .exec(() => {
-        res.render('admin/pages', {
-          title: 'pages'
-        })
+    let ids = req.body['id[]']
+    let count = 0
+    for (let i = 0; i < ids.length; i++) {
+      let id = ids[i]
+      count++
 
-      })
+      ((count) => {
+        Page.findById(id, (err, page) => {
+          page.sorting = countpage.save((err) => {
+            if (err) {
+              return console.log(err)
+            }
+          })
+        })
+      })(count)
+    }
+    // Page.find({})
+    //   .sort({
+    //     sorting: 1
+    //   })
+    //   .exec(() => {
+    //     res.render('admin/pages', {
+    //       title: 'pages'
+    //     })
+
+    //   })
     // res.send('admin area')
     // res.render('index', {
     //   title: 'Admin Panel'
