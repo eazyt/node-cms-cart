@@ -1,21 +1,23 @@
 const mongoose = require('mongoose')
 
-const pageSchema = mongoose.Schema({
+const Schema = mongoose.Schema;
+
+const pageSchema = new Schema({
   title: {
     type: String,
     required: true
   },
-    slug: {
-    type: String,
+  slug: {
+  type: String,
     
   },
-    content: {
-    type: String,
-    required: true
+  content: {
+  type: String,
+  required: true
   },
-    sorting: {
-    type: Number,
+  sorting: {
+  type: Number,
   }
 })
 
-const Page = module.exports = mongoose.model('Page', pageSchema)
+module.exports = mongoose.model('Page', pageSchema)
