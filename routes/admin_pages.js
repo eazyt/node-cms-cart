@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-
 const {
   check,
   validationResult
@@ -15,16 +14,20 @@ router.get('/', (req, res) => {
     .sort({
       sorting: 1
     })
-    .exec(() => {
+    .exec((err, pages) => {
+      console.log(pages)
       res.render('admin/pages', {
-        title: 'pages'
+        pages: pages
+        // 'title': title,
+      //   slug: slug,
+      //   content: content
       })
 
     })
-  // res.send('admin area')
-  // res.render('index', {
-  //   title: 'Admin Panel'
-  // })
+    // res.send('admin area')
+          // res.render('index', {
+          //   title: 'Admin Panel'
+          // })
 })
 
 router.get('/add-page', (req, res) => {
@@ -77,6 +80,8 @@ router.post('/add-page', [
   Page.findOne({
     slug: slug
   }, function (err, page) {
+    console.log('findOne Post')
+    console.log(page)
     if (page) {
       req.flash('danger', 'Page slug exists, choose another.');
       // req.flash('info', 'Flash is back!')
@@ -131,125 +136,43 @@ router.post('/add-page', [
         })
       })(count)
     }
-    // Page.find({})
-    //   .sort({
-    //     sorting: 1
-    //   })
-    //   .exec(() => {
-    //     res.render('admin/pages', {
-    //       title: 'pages'
-    //     })
-
-    //   })
-    // res.send('admin area')
-    // res.render('index', {
-    //   title: 'Admin Panel'
-    // })
   })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // Page.findOne({ slug: slug }, (err, page) => { 
-  //   console.log('success')
-  //     let title = req.body.title;
-  //     let slug = req.body.slug;
-  //     let content = req.body.content;
-  //     const page = new Page({
-  //       title: title,
-  //       slug: slug,
-  //       content: content,
-  //       sorting: 0
-  //     })
-  // page.save(() => { 
-  //   if (err) return console.log(err)
-  //   req, flash('success', 'Page added')
-  //   res.redirect('/admin/pages')
-  // })
-  // }
-
-  // if (page) {
-  //   req.flash('danger', 'Page slug exists, choose another')
-  //   res.render('admin/add_page', {
-  //     title: title,
-  //     slug: slug,
-  //     content: content
-  //   })
-  // }
-  // else { 
-  //   let mypage = new Page({
-  //     title: title,
-  //     slug: slug,
-  //     content: content,
-  //     sorting: 0
-  //   })
-  //   mypage.save(() => { 
-  //     if (err) return console.log(err)
-  //     req, flash('success', 'Page added')
-  //     res.redirect('/admin/pages')
-  //   })
-  // }
-  //     })
 })
 
+router.get('/edit-page/:slug', (req, res) => {
+  Page.findOne({
+    slug: req.params.slug
+  }, (err, page) => {
+    console.log('findOne Post')
+    console.log(page)
+    // if (page) {
+    //   req.flash('danger', 'Page slug exists, choose another.');
+    //   // req.flash('info', 'Flash is back!')
+    //   res.render('admin/add_page', {
+    //     title: title,
+    //     slug: slug,
+    //     content: content
+    //   });
+    //   // console.log(page.title)
+    // }
+    if (err) {
+      return console.log(err)
+    } else {
+      res.render('admin/edit_page', {
+        title: page.title,
+        slug: page.slug,
+        content: page.content,
+        id: page._id
+      })
+    }
+  }).catch((err) =>{
+    console.log('There was an error', err);
+  });
+
+})
+
+router.post('/edit-page/:slug')
 // Exports
 module.exports = router
